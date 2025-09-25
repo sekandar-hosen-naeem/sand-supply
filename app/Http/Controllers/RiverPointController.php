@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\RiverPoint;
@@ -12,8 +11,8 @@ class RiverPointController extends Controller
      */
     public function index()
     {
-        $data=RiverPoint::get();
-        return view('backend.river_points.index',compact('data'));
+        $data = RiverPoint::get();
+        return view('backend.river_points.index', compact('data'));
     }
 
     /**
@@ -30,10 +29,10 @@ class RiverPointController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'point_name'=>'required'
+            'point_name' => 'required'
         ]);
         RiverPoint::create($request->all());
-        return redirect()->route('river-points.index')->with('success','River Point created successfully.');
+        return redirect()->route('river-points.index')->with('success', 'River Point created successfully.');
     }
 
     /**
@@ -49,7 +48,7 @@ class RiverPointController extends Controller
      */
     public function edit(RiverPoint $riverPoint)
     {
-        return view('backend.river_points.edit',compact('riverPoint'));
+        return view('backend.river_points.edit', compact('riverPoint'));
     }
 
     /**
@@ -58,10 +57,10 @@ class RiverPointController extends Controller
     public function update(Request $request, RiverPoint $riverPoint)
     {
         $request->validate([
-            'point_name'=>'required'
+            'point_name' => 'required'
         ]);
         $riverPoint->update($request->all());
-        return redirect()->route('river-points.index')->with('success','River Point updated successfully.');
+        return redirect()->route('river-points.index')->with('success', 'River Point updated successfully.');
     }
 
     /**
@@ -69,10 +68,10 @@ class RiverPointController extends Controller
      */
     public function destroy(RiverPoint $riverPoint)
     {
-        if($riverPoint->tenders()->count() > 0){
-            return redirect()->route('river-points.index')->with('error','Cannot delete River Point with associated Tenders.');
+        if ($riverPoint->tenders()->count() > 0) {
+            return redirect()->route('river-points.index')->with('error', 'Cannot delete River Point with associated Tenders.');
         }
         $riverPoint->delete();
-        return redirect()->route('river-points.index')->with('success','River Point deleted successfully.');
+        return redirect()->route('river-points.index')->with('success', 'River Point deleted successfully.');
     }
 }

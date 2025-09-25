@@ -66,11 +66,11 @@
             </a>
 
             <div class="sidebar-submenu" id="sandTypesSubmenu">
-                <a href="#" class="sidebar-item">
+                <a href="{{route('sand-types.index')}}" class="sidebar-item">
                     <i class="bi bi-list"></i>
                     <span>All Types</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{route('sand-types.create')}}" class="sidebar-item">
                     <i class="bi bi-plus-circle"></i>
                     <span>Add Type</span>
                 </a>
@@ -116,7 +116,7 @@
                     <i class="bi bi-archive"></i>
                     <span>Tender History</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('tender-owners.index') }}" class="sidebar-item">
                     <i class="bi bi-people"></i>
                     <span>Tender Owners</span>
                 </a>
@@ -154,19 +154,19 @@
             </a>
 
             <div class="sidebar-submenu" id="vehiclesSubmenu">
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('vehicles.index') }}" class="sidebar-item">
                     <i class="bi bi-list"></i>
                     <span>Fleet</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('vehicles.create') }}" class="sidebar-item">
                     <i class="bi bi-plus-circle"></i>
                     <span>Add Vehicle</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="" class="sidebar-item">
                     <i class="bi bi-signpost-split"></i>
                     <span>Trips</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="" class="sidebar-item">
                     <i class="bi bi-wrench"></i>
                     <span>Maintenance</span>
                 </a>
@@ -179,11 +179,11 @@
             </a>
 
             <div class="sidebar-submenu" id="workersSubmenu">
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('workers.index') }}" class="sidebar-item">
                     <i class="bi bi-people"></i>
                     <span>All Workers</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('workers.create') }}" class="sidebar-item">
                     <i class="bi bi-person-plus"></i>
                     <span>Add Worker</span>
                 </a>

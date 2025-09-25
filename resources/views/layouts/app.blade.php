@@ -120,7 +120,7 @@
                     <i class="bi bi-archive"></i>
                     <span>Tender History</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('tender-owners.index') }}" class="sidebar-item">
                     <i class="bi bi-people"></i>
                     <span>Tender Owners</span>
                 </a>
@@ -183,11 +183,11 @@
             </a>
 
             <div class="sidebar-submenu" id="workersSubmenu">
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('workers.index') }}" class="sidebar-item">
                     <i class="bi bi-people"></i>
                     <span>All Workers</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('worker.create') }}" class="sidebar-item">
                     <i class="bi bi-person-plus"></i>
                     <span>Add Worker</span>
                 </a>
