@@ -10,6 +10,10 @@ use App\Http\Controllers\SalePointController;
 use App\Http\Controllers\TransportRateController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\WorkerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,30 +26,29 @@ use App\Http\Controllers\WorkerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Route::get('/front', function () {
     return view('front');
 });
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
-Route::resource('river-points', RiverPointController::class);
-Route::resource('tenders', TenderController::class);
-// routes/web.php
-Route::resource('sand-types', SandTypeController::class);
-// routes/web.php
-Route::resource('tender-owners', TenderOwnerController::class);
-// routes/web.php
-Route::resource('buyers', BuyerController::class);
-// routes/web.php
-Route::resource('sale-points', SalePointController::class);
-// routes/web.php
-Route::resource('transport-rates', TransportRateController::class);
-// routes/web.php
-// routes/web.php
-Route::resource('vehicles', VehicleController::class);
-// routes/web.php
-// routes/web.php
-Route::resource('workers', WorkerController::class);
+
+
+
+Auth::routes();
+
+Route::middleware('auth:web')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('river-points', RiverPointController::class);
+    Route::resource('tenders', TenderController::class);
+    Route::resource('sand-types', SandTypeController::class);
+    Route::resource('tender-owners', TenderOwnerController::class);
+    Route::resource('buyers', BuyerController::class);
+    Route::resource('sale-points', SalePointController::class);
+    Route::resource('transport-rates', TransportRateController::class);
+    Route::resource('vehicles', VehicleController::class);
+    Route::resource('workers', WorkerController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
+    Route::get('roles/{role_id}/permission', [RoleController::class, 'permission'])->name('roles.permission');
+    Route::post('roles/{role_id}/permission', [RoleController::class, 'savePermission'])->name('roles.assignPermission');
+});

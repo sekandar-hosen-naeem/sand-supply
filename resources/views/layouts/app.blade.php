@@ -1,387 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sand Mining Management System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    @stack('styles')
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="d-flex align-items-center justify-content-between">
-                <div class="sidebar-profile">
-                    <img src="profile.jpg" alt="Admin Profile" class="rounded-circle"
-                        style="width: 55px; height: 55px; border: 2px solid rgba(255, 255, 255, 0.3);">
-                </div>
-                <div class="sidebar-title">
-                    <h3>Sand Mining Admin</h3>
-                </div>
-                <button class="btn btn-sm text-white" id="sidebarCloseBtn" style="display: none;">
-                    <i class="bi bi-x-lg"></i>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-            </div>
-        </div>
 
-        <div class="sidebar-menu">
-            <a href="#" class="sidebar-item active">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dashboard</span>
-            </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
 
-            <a href="#" class="sidebar-item" id="riverPointsToggle">
-                <i class="bi bi-geo-alt"></i>
-                <span>River Points</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
+                    </ul>
 
-            <div class="sidebar-submenu" id="riverPointsSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-list"></i>
-                    <span>All Points</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-plus-circle"></i>
-                    <span>Add Point</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-info-circle"></i>
-                    <span>Point Details</span>
-                </a>
-            </div>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
 
-            <a href="#" class="sidebar-item" id="sandTypesToggle">
-                <i class="bi bi-collection"></i>
-                <span>Sand Types</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
+                                </a>
 
-            <div class="sidebar-submenu" id="sandTypesSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-list"></i>
-                    <span>All Types</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-plus-circle"></i>
-                    <span>Add Type</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-star"></i>
-                    <span>Quality Grades</span>
-                </a>
-            </div>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
 
-            <a href="#" class="sidebar-item" id="sandStocksToggle">
-                <i class="bi bi-box-seam"></i>
-                <span>Sand Stocks</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <div class="sidebar-submenu" id="sandStocksSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-currency-dollar"></i>
-                    <span>Current Stock</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-clock-history"></i>
-                    <span>Stock History</span>
-                </a>
-            </div>
-
-            <a href="#" class="sidebar-item" id="tendersToggle">
-                <i class="bi bi-file-earmark-text"></i>
-                <span>Tenders</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <div class="sidebar-submenu" id="tendersSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-list-ul"></i>
-                    <span>Active Tenders</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-plus-circle"></i>
-                    <span>Add Tender</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-archive"></i>
-                    <span>Tender History</span>
-                </a>
-                <a href="{{ route('tender-owners.index') }}" class="sidebar-item">
-                    <i class="bi bi-people"></i>
-                    <span>Tender Owners</span>
-                </a>
-            </div>
-
-            <a href="#" class="sidebar-item" id="salesToggle">
-                <i class="bi bi-cart-check"></i>
-                <span>Sales</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <div class="sidebar-submenu" id="salesSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-receipt"></i>
-                    <span>Sales Records</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-plus-circle"></i>
-                    <span>New Sale</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-file-earmark-text"></i>
-                    <span>Invoices</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-cash"></i>
-                    <span>Payments</span>
-                </a>
-            </div>
-
-            <a href="#" class="sidebar-item" id="vehiclesToggle">
-                <i class="bi bi-truck"></i>
-                <span>Vehicles</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <div class="sidebar-submenu" id="vehiclesSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-list"></i>
-                    <span>Fleet</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-plus-circle"></i>
-                    <span>Add Vehicle</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-signpost-split"></i>
-                    <span>Trips</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-wrench"></i>
-                    <span>Maintenance</span>
-                </a>
-            </div>
-
-            <a href="#" class="sidebar-item" id="workersToggle">
-                <i class="bi bi-person-badge"></i>
-                <span>Workers</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <div class="sidebar-submenu" id="workersSubmenu">
-                <a href="{{ route('workers.index') }}" class="sidebar-item">
-                    <i class="bi bi-people"></i>
-                    <span>All Workers</span>
-                </a>
-                <a href="{{ route('worker.create') }}" class="sidebar-item">
-                    <i class="bi bi-person-plus"></i>
-                    <span>Add Worker</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-calendar-check"></i>
-                    <span>Attendance</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-cash-stack"></i>
-                    <span>Wages</span>
-                </a>
-            </div>
-
-            <a href="#" class="sidebar-item" id="majhiToggle">
-                <i class="bi bi-person-workspace"></i>
-                <span>Majhi</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <div class="sidebar-submenu" id="majhiSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-people"></i>
-                    <span>All Majhi</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-person-plus"></i>
-                    <span>Add Majhi</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-boat"></i>
-                    <span>Boat Assignments</span>
-                </a>
-            </div>
-
-            <a href="#" class="sidebar-item" id="equipmentToggle">
-                <i class="bi bi-tools"></i>
-                <span>Equipment</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <div class="sidebar-submenu" id="equipmentSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-list"></i>
-                    <span>All Equipment</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-plus-circle"></i>
-                    <span>Add Equipment</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-clock"></i>
-                    <span>Usage</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-wrench"></i>
-                    <span>Maintenance</span>
-                </a>
-            </div>
-
-            <a href="#" class="sidebar-item" id="reportsToggle">
-                <i class="bi bi-file-earmark-bar-graph"></i>
-                <span>Reports</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <div class="sidebar-submenu" id="reportsSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-cart"></i>
-                    <span>Sales Reports</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-box-seam"></i>
-                    <span>Stock Reports</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-cash-stack"></i>
-                    <span>Financial Reports</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-file-earmark-text"></i>
-                    <span>Custom Reports</span>
-                </a>
-            </div>
-
-            <a href="#" class="sidebar-item" id="settingsToggle">
-                <i class="bi bi-gear"></i>
-                <span>Settings</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-
-            <div class="sidebar-submenu" id="settingsSubmenu">
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-globe"></i>
-                    <span>General</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-people"></i>
-                    <span>Users & Roles</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-shield-lock"></i>
-                    <span>Permissions</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="bi bi-bell"></i>
-                    <span>Notifications</span>
-                </a>
-            </div>
-
-            <a href="#" class="sidebar-item">
-                <i class="bi bi-question-circle"></i>
-                <span>Help & Support</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header class="header" id="header">
-        <button class="menu-toggle" id="menuToggle">
-            <i class="bi bi-list"></i>
-        </button>
-
-        <div class="header-search position-relative">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text" class="form-control" placeholder="Search river points, tenders, sales...">
-        </div>
-
-        <div class="header-nav ms-auto">
-            <div class="header-nav-item">
-                <a href="#" class="header-nav-link">
-                    <i class="bi bi-bell"></i>
-                    <span class="badge">3</span>
-                </a>
-            </div>
-
-            <div class="header-nav-item">
-                <a href="#" class="header-nav-link">
-                    <i class="bi bi-envelope"></i>
-                    <span class="badge">5</span>
-                </a>
-            </div>
-
-            <div class="user-dropdown" id="userDropdown">
-                <img src="https://picsum.photos/seed/admin123/40/40.jpg" alt="User">
-                <span>Admin</span>
-                <i class="bi bi-chevron-down ms-2"></i>
-
-                <div class="user-dropdown-menu" id="userDropdownMenu">
-                    <a href="#">
-                        <i class="bi bi-person-circle"></i>
-                        <span>My Profile</span>
-                    </a>
-                    <a href="#">
-                        <i class="bi bi-gear"></i>
-                        <span>Account Settings</span>
-                    </a>
-                    <a href="#">
-                        <i class="bi bi-bell"></i>
-                        <span>Notifications</span>
-                    </a>
-                    <div class="divider"></div>
-                    <a href="#">
-                        <i class="bi bi-question-circle"></i>
-                        <span>Help & Support</span>
-                    </a>
-                    <a href="#">
-                        <i class="bi bi-box-arrow-right"></i>
-                        <span>Logout</span>
-                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
                 </div>
             </div>
-        </div>
-    </header>
+        </nav>
 
-    <!-- Main Content -->
-    <main class="main-content" id="mainContent">
-        @yield('content')
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" id="footer">
-        <div>
-            <span class="text-muted">© 2023 Sand Mining Management System. All rights reserved.</span>
-        </div>
-        <div>
-            <span class="text-muted">Version 1.0.0</span>
-        </div>
-    </footer>
-
-    <!-- Bootstrap 5 JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="{{asset('assets/js/script.js')}}"></script>
-    @stack('scripts')
+        <main class="py-4">
+            @yield('content')
+        </main>
+    </div>
 </body>
-
 </html>

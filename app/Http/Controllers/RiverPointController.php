@@ -3,14 +3,18 @@ namespace App\Http\Controllers;
 
 use App\Models\RiverPoint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RiverPointController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $this->authorize('view users');
         $data = RiverPoint::get();
         return view('backend.river_points.index', compact('data'));
     }
@@ -20,6 +24,7 @@ class RiverPointController extends Controller
      */
     public function create()
     {
+        $this->authorize('create river-points');
         return view('backend.river_points.create');
     }
 

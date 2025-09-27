@@ -49,10 +49,12 @@
             </a>
 
             <div class="sidebar-submenu" id="riverPointsSubmenu">
-                <a href="{{route('river-points.index')}}" class="sidebar-item">
-                    <i class="bi bi-list"></i>
-                    <span>All Points</span>
-                </a>
+                @can('view river-points')
+                    <a href="{{route('river-points.index')}}" class="sidebar-item">
+                        <i class="bi bi-list"></i>
+                        <span>All Points</span>
+                    </a>
+                @endcan
                 <a href="{{route('river-points.create')}}" class="sidebar-item">
                     <i class="bi bi-plus-circle"></i>
                     <span>Add Point</span>
@@ -279,9 +281,13 @@
                     <i class="bi bi-globe"></i>
                     <span>General</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{route('roles.index')}}" class="sidebar-item">
                     <i class="bi bi-people"></i>
-                    <span>Users & Roles</span>
+                    <span>Roles</span>
+                </a>
+                <a href="{{route('users.index')}}" class="sidebar-item">
+                    <i class="bi bi-people"></i>
+                    <span>Users</span>
                 </a>
                 <a href="#" class="sidebar-item">
                     <i class="bi bi-shield-lock"></i>
@@ -349,7 +355,10 @@
                         <i class="bi bi-question-circle"></i>
                         <span>Help & Support</span>
                     </a>
-                    <a href="#">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="bi bi-box-arrow-right"></i>
                         <span>Logout</span>
                     </a>
