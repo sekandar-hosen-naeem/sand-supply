@@ -206,11 +206,11 @@
             </a>
 
             <div class="sidebar-submenu" id="majhiSubmenu">
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('majhis.index') }}" class="sidebar-item">
                     <i class="bi bi-people"></i>
                     <span>All Majhi</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('majhis.create') }}" class="sidebar-item">
                     <i class="bi bi-person-plus"></i>
                     <span>Add Majhi</span>
                 </a>
@@ -227,11 +227,11 @@
             </a>
 
             <div class="sidebar-submenu" id="equipmentSubmenu">
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('equipments.index') }}" class="sidebar-item">
                     <i class="bi bi-list"></i>
                     <span>All Equipment</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('equipments.create') }}" class="sidebar-item">
                     <i class="bi bi-plus-circle"></i>
                     <span>Add Equipment</span>
                 </a>

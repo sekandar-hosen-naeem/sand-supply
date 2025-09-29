@@ -14,6 +14,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MajhiController;
+use App\Http\Controllers\BoatController;
+use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +59,20 @@ Route::middleware('auth:web')->group(function () {
     Route::get('roles/{role_id}/permission', [RoleController::class, 'permission'])->name('roles.permission');
     Route::post('roles/{role_id}/permission', [RoleController::class, 'savePermission'])->name('roles.assignPermission');
 });
+// routes/web.php
+Route::resource('majhis', MajhiController::class);
+// routes/web.php
+Route::resource('boats', BoatController::class);
+// routes/web.php
+Route::resource('equipments', EquipmentController::class);
+// routes/web.php
+Route::resource('operators', OperatorController::class);
+// routes/web.php
+Route::resource('expenses', ExpenseController::class);
+// routes/web.php
+Route::resource('revenues', RevenueController::class);
+// routes/web.php
+Route::resource('suppliers', SupplierController::class);
+// routes/web.php
+
+
