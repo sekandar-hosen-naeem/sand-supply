@@ -135,7 +135,7 @@
                     <i class="bi bi-receipt"></i>
                     <span>Sales Records</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('sand_sales.create') }}" class="sidebar-item">
                     <i class="bi bi-plus-circle"></i>
                     <span>New Sale</span>
                 </a>

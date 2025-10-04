@@ -21,7 +21,8 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\SupplierController;
-
+use App\Http\Controllers\SandStockController;
+use App\Http\Controllers\SandSaleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,21 +59,15 @@ Route::middleware('auth:web')->group(function () {
     Route::resource('roles', RoleController::class);
     Route::get('roles/{role_id}/permission', [RoleController::class, 'permission'])->name('roles.permission');
     Route::post('roles/{role_id}/permission', [RoleController::class, 'savePermission'])->name('roles.assignPermission');
+    Route::resource('majhis', MajhiController::class);
+    Route::resource('boats', BoatController::class);
+    Route::resource('equipments', EquipmentController::class);
+    Route::resource('operators', OperatorController::class);
+    Route::resource('expenses', ExpenseController::class);
+    Route::resource('revenues', RevenueController::class);
+    Route::resource('suppliers', SupplierController::class);
+    Route::resource('sand_stocks', SandStockController::class);
+    Route::resource('sand_sales', SandSaleController::class);
+
+
 });
-// routes/web.php
-Route::resource('majhis', MajhiController::class);
-// routes/web.php
-Route::resource('boats', BoatController::class);
-// routes/web.php
-Route::resource('equipments', EquipmentController::class);
-// routes/web.php
-Route::resource('operators', OperatorController::class);
-// routes/web.php
-Route::resource('expenses', ExpenseController::class);
-// routes/web.php
-Route::resource('revenues', RevenueController::class);
-// routes/web.php
-Route::resource('suppliers', SupplierController::class);
-// routes/web.php
-
-
