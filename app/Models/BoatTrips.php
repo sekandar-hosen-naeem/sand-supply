@@ -5,25 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VehicleTrip extends Model
+class BoatTrip extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'vehicle_id',
+        'boat_id',
+        'majhi_id',
         'river_point_id',
         'sale_point_id',
-        'transport_rate_id',
         'trip_date',
-        'distance_km',
         'quantity_cft',
+        'distance_km',
         'total_cost',
         'remarks',
     ];
 
-    public function vehicle()
+    public function boat()
     {
-        return $this->belongsTo(Vehicle::class);
+        return $this->belongsTo(Boat::class);
+    }
+
+    public function majhi()
+    {
+        return $this->belongsTo(Majhi::class);
     }
 
     public function riverPoint()
@@ -34,10 +39,5 @@ class VehicleTrip extends Model
     public function salePoint()
     {
         return $this->belongsTo(SalePoint::class);
-    }
-
-    public function transportRate()
-    {
-        return $this->belongsTo(TransportRate::class);
     }
 }

@@ -1,82 +1,70 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\VehicleTrip;
 use App\Models\Vehicle;
+use App\Models\RiverPoint;
 use App\Models\SalePoint;
-use App\Models\Buyer;
+use App\Models\TransportRate;
 use Illuminate\Http\Request;
 
 class VehicleTripController extends Controller
 {
     public function index()
     {
-        $trips = VehicleTrip::with(['vehicle', 'sourcePoint', 'destinationPoint'])
-            ->latest()
-            ->paginate(15);
-
-        return view('vehicle_trips.index', compact('trips'));
+        $data = VehicleTrip::with(['vehicle','riverPoint','salePoint','transportRate'])
+            ->orderBy('trip_date','desc')
+            ->get();
+        return view('backend.vehicle_trips.index', compact('data'));
     }
 
     public function create()
     {
         $vehicles = Vehicle::all();
+        $riverPoints = RiverPoint::all();
         $salePoints = SalePoint::all();
-        $buyers = Buyer::all();
-        return view('vehicle_trips.create', compact('vehicles', 'salePoints', 'buyers'));
+        $transportRates = TransportRate::all();
+        return view('backend.vehicle_trips.create', compact('vehicles','riverPoints','salePoints','transportRates'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'vehicle_id' => 'required|exists:vehicles,id',
-            'driver_name' => 'required|string|max:255',
             'trip_date' => 'required|date',
-            'source_point_id' => 'required|exists:sale_points,id',
-            'destination_point_id' => 'required|exists:buyers,id',
-            'quantity_cft' => 'required|numeric|min:0',
-            'rate_per_cft' => 'required|numeric|min:0',
-            'total_amount' => 'required|numeric|min:0',
+            'transport_rate_id' => 'nullable|exists:transport_rates,id',
+            'river_point_id' => 'nullable|exists:river_points,id',
+            'sale_point_id' => 'nullable|exists:sale_points,id',
         ]);
 
         VehicleTrip::create($request->all());
-
-        return redirect()->route('vehicle_trips.index')->with('success', 'Vehicle Trip created successfully.');
+        return redirect()->route('vehicle-trips.index')->with('success','Vehicle Trip created successfully.');
     }
 
-    public function edit($id)
+    public function edit(VehicleTrip $vehicleTrip)
     {
-        $trip = VehicleTrip::findOrFail($id);
         $vehicles = Vehicle::all();
+        $riverPoints = RiverPoint::all();
         $salePoints = SalePoint::all();
-        $buyers = Buyer::all();
-        return view('vehicle_trips.edit', compact('trip', 'vehicles', 'salePoints', 'buyers'));
+        $transportRates = TransportRate::all();
+        return view('backend.vehicle_trips.edit', compact('vehicleTrip','vehicles','riverPoints','salePoints','transportRates'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, VehicleTrip $vehicleTrip)
     {
         $request->validate([
             'vehicle_id' => 'required|exists:vehicles,id',
-            'driver_name' => 'required|string|max:255',
             'trip_date' => 'required|date',
-            'source_point_id' => 'required|exists:sale_points,id',
-            'destination_point_id' => 'required|exists:buyers,id',
-            'quantity_cft' => 'required|numeric|min:0',
-            'rate_per_cft' => 'required|numeric|min:0',
-            'total_amount' => 'required|numeric|min:0',
         ]);
 
-        $trip = VehicleTrip::findOrFail($id);
-        $trip->update($request->all());
-
-        return redirect()->route('vehicle_trips.index')->with('success', 'Vehicle Trip updated successfully.');
+        $vehicleTrip->update($request->all());
+        return redirect()->route('vehicle-trips.index')->with('success','Vehicle Trip updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(VehicleTrip $vehicleTrip)
     {
-        $trip = VehicleTrip::findOrFail($id);
-        $trip->delete();
-
-        return redirect()->route('vehicle_trips.index')->with('success', 'Vehicle Trip deleted successfully.');
+        $vehicleTrip->delete();
+        return redirect()->route('vehicle-trips.index')->with('success','Vehicle Trip deleted successfully.');
     }
 }

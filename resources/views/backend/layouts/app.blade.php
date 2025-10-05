@@ -164,7 +164,7 @@
                     <i class="bi bi-plus-circle"></i>
                     <span>Add Vehicle</span>
                 </a>
-                <a href="" class="sidebar-item">
+                <a href="{{ route('vehicle-trips.create') }}" class="sidebar-item">
                     <i class="bi bi-signpost-split"></i>
                     <span>Trips</span>
                 </a>
@@ -235,7 +235,7 @@
                     <i class="bi bi-plus-circle"></i>
                     <span>Add Equipment</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="" class="sidebar-item">
                     <i class="bi bi-clock"></i>
                     <span>Usage</span>
                 </a>

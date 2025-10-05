@@ -23,6 +23,14 @@ use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SandStockController;
 use App\Http\Controllers\SandSaleController;
+use App\Http\Controllers\VehicleTripController;
+use App\Http\Controllers\WorkerAttendanceController;
+use App\Http\Controllers\BoatTripController;
+use App\Http\Controllers\EquipmentUsageController;
+use App\Http\Controllers\FuelConsumptionController;
+use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\ContractController;
+use App\Http\Controllers\InvoiceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,7 +75,17 @@ Route::middleware('auth:web')->group(function () {
     Route::resource('revenues', RevenueController::class);
     Route::resource('suppliers', SupplierController::class);
     Route::resource('sand_stocks', SandStockController::class);
-    Route::resource('sand_sales', SandSaleController::class);
+    Route::resource('sand_sales', SandSaleController::class);       
+    Route::resource('vehicle-trips', VehicleTripController::class);
+    Route::resource('worker-attendances', WorkerAttendanceController::class);  
+    Route::resource('boat-trips', BoatTripController::class);
+    Route::resource('equipment-usages', EquipmentUsageController::class);
+    Route::resource('fuel-consumptions', FuelConsumptionController::class);
+    Route::resource('maintenances', MaintenanceController::class);
+    Route::resource('contracts', ContractController::class);
+    Route::resource('invoices', InvoiceController::class);
+
+
 
 
 });
