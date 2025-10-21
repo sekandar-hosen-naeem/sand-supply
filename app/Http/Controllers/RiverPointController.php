@@ -14,7 +14,7 @@ class RiverPointController extends Controller
      */
     public function index()
     {
-        $this->authorize('view users');
+        //$this->authorize('view users');
         $data = RiverPoint::get();
         return view('backend.river_points.index', compact('data'));
     }
@@ -24,7 +24,7 @@ class RiverPointController extends Controller
      */
     public function create()
     {
-        $this->authorize('create river-points');
+        //$this->authorize('create river-points');
         return view('backend.river_points.create');
     }
 

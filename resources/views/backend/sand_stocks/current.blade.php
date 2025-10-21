@@ -23,35 +23,24 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>River Point</th>
-                                    <th>Sand Type</th>
-                                    <th>Available (CFT)</th>
-                                    <th>Updated</th>
-                                    <th>Actions</th>
+                                    <th>Sand Name</th>
+                                    <th>Total Stock</th>
+                                    <th>Total Sold</th>
+                                    <th>Current Stock</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($sand_stocks as $stock)
                                     <tr>
                                         <td>{{ $stock->id }}</td>
-                                        <td>{{ $stock->riverPoint?->name }}</td>
-                                        <td>{{ $stock->sandType?->name }}</td>
-                                        <td>{{ $stock->available_quantity_cft }}</td>
-                                        <td>{{ $stock->updated_at->format('Y-m-d') }}</td>
-                                        <td>
-                                            <a href="{{ route('sand_stocks.show', $stock) }}">View</a> |
-                                            <a href="{{ route('sand_stocks.edit', $stock) }}">Edit</a> |
-                                            <form action="{{ route('sand_stocks.destroy', $stock) }}" method="POST"
-                                                style="display:inline">
-                                                @csrf @method('DELETE')
-                                                <button onclick="return confirm('Delete?')">Delete</button>
-                                            </form>
-                                        </td>
+                                        <td>{{ $stock->sand_name }}</td>
+                                        <td>{{ $stock->total_stock }}</td>
+                                        <td>{{ $stock->total_sold }}</td>
+                                        <td>{{ $stock->current_stock }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $sand_stocks->links() }}
                     </div>
                 </div>
             </div>

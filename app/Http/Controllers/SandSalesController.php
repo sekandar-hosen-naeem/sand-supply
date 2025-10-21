@@ -7,19 +7,19 @@ use App\Models\Buyer;
 use App\Models\SandType;
 use Illuminate\Http\Request;
 
-class SandSaleController extends Controller
+class SandSalesController extends Controller
 {
     public function index()
     {
         $sand_sales = SandSale::with(['buyer', 'sandType'])->latest()->paginate(15);
-        return view('sand_sales.index', compact('sand_sales'));
+        return view('backend.sand_sales.index', compact('sand_sales'));
     }
 
     public function create()
     {
         $buyers = Buyer::pluck('name', 'id');
-        $sand_types = SandType::pluck('name', 'id');
-        return view('sand_sales.create', compact('buyers', 'sand_types'));
+        $sand_types = SandType::get();
+        return view('backend.sand_sales.create', compact('buyers', 'sand_types'));
     }
 
     public function store(Request $request)
@@ -42,14 +42,14 @@ class SandSaleController extends Controller
 
     public function show(SandSale $sand_sale)
     {
-        return view('sand_sales.show', compact('sand_sale'));
+        return view('backend.sand_sales.show', compact('sand_sale'));
     }
 
     public function edit(SandSale $sand_sale)
     {
         $buyers = Buyer::pluck('name', 'id');
-        $sand_types = SandType::pluck('name', 'id');
-        return view('sand_sales.edit', compact('sand_sale', 'buyers', 'sand_types'));
+        $sand_types = SandType::pluck('sand_name', 'id');
+        return view('backend.sand_sales.edit', compact('sand_sale', 'buyers', 'sand_types'));
     }
 
     public function update(Request $request, SandSale $sand_sale)

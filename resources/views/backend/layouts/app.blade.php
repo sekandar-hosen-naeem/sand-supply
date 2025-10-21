@@ -42,19 +42,18 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="#" class="sidebar-item" id="riverPointsToggle">
+            <a href="#riverPointsSubmenu" class="sidebar-item" id="riverPointsToggle">
                 <i class="bi bi-geo-alt"></i>
                 <span>River Points</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
 
             <div class="sidebar-submenu" id="riverPointsSubmenu">
-                @can('view river-points')
-                    <a href="{{route('river-points.index')}}" class="sidebar-item">
-                        <i class="bi bi-list"></i>
-                        <span>All Points</span>
-                    </a>
-                @endcan
+
+                <a href="{{route('river-points.index')}}" class="sidebar-item">
+                    <i class="bi bi-list"></i>
+                    <span>All Points</span>
+                </a>
                 <a href="{{route('river-points.create')}}" class="sidebar-item">
                     <i class="bi bi-plus-circle"></i>
                     <span>Add Point</span>
@@ -82,18 +81,22 @@
                 </a>
             </div>
 
-            <a href="#" class="sidebar-item" id="sandStocksToggle">
+            <a href="{{ route('sand_stocks.index') }}" class="sidebar-item" id="sandStocksToggle">
                 <i class="bi bi-box-seam"></i>
                 <span>Sand Stocks</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
 
             <div class="sidebar-submenu" id="sandStocksSubmenu">
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('sand_stocks.index') }}" class="sidebar-item">
+                    <i class="bi bi-currency-dollar"></i>
+                    <span> Stock</span>
+                </a>
+                <a href="{{ route('sand_stocks_history') }}" class="sidebar-item">
                     <i class="bi bi-currency-dollar"></i>
                     <span>Current Stock</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="" class="sidebar-item">
                     <i class="bi bi-clock-history"></i>
                     <span>Stock History</span>
                 </a>
@@ -131,7 +134,7 @@
             </a>
 
             <div class="sidebar-submenu" id="salesSubmenu">
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('sand_sales.index') }}" class="sidebar-item">
                     <i class="bi bi-receipt"></i>
                     <span>Sales Records</span>
                 </a>
@@ -141,7 +144,7 @@
                 </a>
                 <a href="#" class="sidebar-item">
                     <i class="bi bi-file-earmark-text"></i>
-                    <span>Invoices</span>
+                    <span> ces</span>
                 </a>
                 <a href="#" class="sidebar-item">
                     <i class="bi bi-cash"></i>

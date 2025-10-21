@@ -9,10 +9,10 @@ return new class extends Migration {
     {
         Schema::create('vehicle_trips', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('river_point_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignId('sale_point_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignId('transport_rate_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->bigInteger('vehicle_id')->unsigned()->index();
+            $table->bigInteger('river_point_id')->nullable()->unsigned()->index();
+            $table->bigInteger('sale_point_id')->nullable()->unsigned()->index();
+            $table->bigInteger('transport_rate_id')->nullable()->unsigned()->index();
             $table->date('trip_date');
             $table->decimal('distance_km', 10, 2)->nullable();
             $table->decimal('quantity_cft', 12, 2)->nullable();

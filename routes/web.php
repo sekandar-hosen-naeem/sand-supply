@@ -21,9 +21,9 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\SandStockController;
-use App\Http\Controllers\SandSaleController;
-use App\Http\Controllers\VehicleTripController;
+use App\Http\Controllers\SandStocksController;
+use App\Http\Controllers\SandSalesController;
+use App\Http\Controllers\VehicleTripsController;
 use App\Http\Controllers\WorkerAttendanceController;
 use App\Http\Controllers\BoatTripController;
 use App\Http\Controllers\EquipmentUsageController;
@@ -74,16 +74,17 @@ Route::middleware('auth:web')->group(function () {
     Route::resource('expenses', ExpenseController::class);
     Route::resource('revenues', RevenueController::class);
     Route::resource('suppliers', SupplierController::class);
-    Route::resource('sand_stocks', SandStockController::class);
-    Route::resource('sand_sales', SandSaleController::class);       
-    Route::resource('vehicle-trips', VehicleTripController::class);
-    Route::resource('worker-attendances', WorkerAttendanceController::class);  
+    Route::resource('sand_stocks', SandStocksController::class);
+    Route::resource('sand_sales', SandSalesController::class);
+    Route::resource('vehicle-trips', VehicleTripsController::class);
+    Route::resource('worker-attendances', WorkerAttendanceController::class);
     Route::resource('boat-trips', BoatTripController::class);
     Route::resource('equipment-usages', EquipmentUsageController::class);
     Route::resource('fuel-consumptions', FuelConsumptionController::class);
     Route::resource('maintenances', MaintenanceController::class);
     Route::resource('contracts', ContractController::class);
     Route::resource('invoices', InvoiceController::class);
+    Route::get('sand-stocks-history', [SandStocksController::class, 'history'])->name('sand_stocks_history');
 
 
 

@@ -7,19 +7,19 @@ use App\Models\RiverPoint;
 use App\Models\SandType;
 use Illuminate\Http\Request;
 
-class SandStockController extends Controller
+class SandStocksController extends Controller
 {
     public function index()
     {
         $sand_stocks = SandStock::with(['riverPoint', 'sandType'])->latest()->paginate(15);
-        return view('sand_stocks.index', compact('sand_stocks'));
+        return view('backend.sand_stocks.index', compact('sand_stocks'));
     }
 
     public function create()
     {
-        $river_points = RiverPoint::pluck('name', 'id');
-        $sand_types = SandType::pluck('name', 'id');
-        return view('sand_stocks.create', compact('river_points', 'sand_types'));
+        $river_points = RiverPoint::pluck('point_name', 'id');
+        $sand_types = SandType::pluck('sand_name', 'id');
+        return view('backend.sand_stocks.create', compact('river_points', 'sand_types'));
     }
 
     public function store(Request $request)
@@ -64,5 +64,25 @@ class SandStockController extends Controller
     {
         $sand_stock->delete();
         return redirect()->route('sand_stocks.index')->with('success', 'Sand Stock deleted successfully!');
+    }
+    public function history()
+    {
+        $sand_stocks = SandType::select('id', 'sand_name')
+            ->selectSub(function ($query) {
+                $query->from('sand_stocks')
+                    ->selectRaw('COALESCE(SUM(available_quantity_cft), 0)')
+                    ->whereColumn('sand_stocks.sand_type_id', 'sand_types.id');
+            }, 'total_stock')
+            ->selectSub(function ($query) {
+                $query->from('sand_sales')
+                    ->selectRaw('COALESCE(SUM(quantity_cft), 0)')
+                    ->whereColumn('sand_sales.sand_type_id', 'sand_types.id');
+            }, 'total_sold')
+            ->get()
+            ->map(function ($t) {
+                $t->current_stock = $t->total_stock - $t->total_sold;
+                return $t;
+            });
+        return view('backend.sand_stocks.current', compact('sand_stocks'));
     }
 }
