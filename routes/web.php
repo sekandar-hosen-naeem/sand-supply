@@ -31,6 +31,7 @@ use App\Http\Controllers\FuelConsumptionController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\SupplyAreaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,8 +86,6 @@ Route::middleware('auth:web')->group(function () {
     Route::resource('contracts', ContractController::class);
     Route::resource('invoices', InvoiceController::class);
     Route::get('sand-stocks-history', [SandStocksController::class, 'history'])->name('sand_stocks_history');
-
-
-
+    Route::resource('supply-areas', SupplyAreaController::class);
 
 });

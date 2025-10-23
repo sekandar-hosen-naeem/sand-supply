@@ -296,9 +296,9 @@
                     <i class="bi bi-shield-lock"></i>
                     <span>Permissions</span>
                 </a>
-                <a href="#" class="sidebar-item">
+                <a href="{{ route('supply-areas.index') }}" class="sidebar-item">
                     <i class="bi bi-bell"></i>
-                    <span>Notifications</span>
+                    <span>Delivery Area</span>
                 </a>
             </div>
 

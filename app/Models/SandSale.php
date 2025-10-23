@@ -19,6 +19,8 @@ class SandSale extends Model
         'rate_per_cft',
         'total_amount',
         'payment_status',
+        'river_point_id',
+        'supply_area_id',
     ];
 
     protected $casts = [
